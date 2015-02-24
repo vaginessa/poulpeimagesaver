@@ -1,0 +1,21 @@
+{
+  "name": "poulpeimagesaver",
+  "title": "Poulpe image saver",
+  "id": "jid1-0P562WV8uyPcew",
+  "description": "Simple downloader of images from the tabs",
+  "author": "eddie.zato",
+  "license": "MPL 2.0",
+  "version": "0.1",
+  "preferences": [{
+        "name": "pathsList",
+        "title": "List of paths",
+        "description": "Write paths separated by '|'",
+        "type": "string"
+   },
+   {
+        "name": "closeTabs",
+        "title": "Close tabs",
+        "description": "Close tabs after saving images?",
+        "type": "bool"
+    }]
+}

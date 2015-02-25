@@ -46,7 +46,7 @@ function generateStr(length)
 function addRandom(filename)
 {
   var dot = filename.lastIndexOf(".");
-  return (filename.substring(0, dot - 1) + generateStr(10) + filename.substr(dot));
+  return (filename.substring(0, dot) + "_" + generateStr(10) + filename.substr(dot));
 }
 
 //recreate buttons in panel after changing settings

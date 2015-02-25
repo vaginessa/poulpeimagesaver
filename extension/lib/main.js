@@ -42,6 +42,13 @@ function generateStr(length)
   return text;
 }
 
+//add random suffix to string
+function addRandom(filename)
+{
+  var dot = filename.lastIndexOf(".");
+  return (filename.substring(0, dot - 1) + generateStr(10) + filename.substr(dot));
+}
+
 //recreate buttons in panel after changing settings
 function onPathsListChange(prefName)
 {
@@ -72,7 +79,7 @@ function listTabs(path)
     }
   //download images  
   for (let imageUrl of imagesUrls)
-    downloadImage(imageUrl, path, imageUrl.substr(imageUrl.lastIndexOf("/") + 1));  
+    downloadImage(imageUrl, path, addRandom(imageUrl.substr(imageUrl.lastIndexOf("/") + 1)));  
 }
 
 //save file 

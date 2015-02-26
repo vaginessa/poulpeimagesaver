@@ -7,15 +7,30 @@
   "license": "MPL 2.0",
   "version": "0.1",
   "preferences": [{
-        "name": "pathsList",
-        "title": "List of paths",
-        "description": "Write paths separated by '|'",
-        "type": "string"
-   },
-   {
-        "name": "closeTabs",
-        "title": "Close tabs",
-        "description": "Close tabs after saving images?",
-        "type": "bool"
+      "name": "pathsList",
+      "title": "List of paths",
+      "description": "Write paths separated by '|'",
+      "type": "string"
+    },
+    {
+      "name": "closeTabs",
+      "title": "Close tabs",
+      "description": "Close tabs after saving images?",
+      "type": "bool"
+    },
+    {
+      "name": "ifFileExists",
+      "type": "menulist",
+      "title": "If file exists",
+      "description": "What to do?",
+      "options": [
+        {
+          "value": "0",
+          "label": "Rename"
+        },
+        {
+          "value": "1",
+          "label": "Replace"
+        }]
     }]
 }

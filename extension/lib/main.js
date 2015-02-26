@@ -1,8 +1,10 @@
 var {Cu} = require("chrome");
 //Cu.import("resource://gre/modules/devtools/Console.jsm");
 Cu.import("resource://gre/modules/Downloads.jsm");
-Cu.import("resource://gre/modules/osfile.jsm")
 Cu.import("resource://gre/modules/Task.jsm");
+
+const PathIO = require('sdk/fs/path');
+const FileIO = require('sdk/io/file');
 
 var {ToggleButton} = require("sdk/ui/button/toggle");
 var Panels = require("sdk/panel")
@@ -11,6 +13,7 @@ var self = require("sdk/self");
 var preferences = require("sdk/simple-prefs").prefs; //access to preferences
 if (preferences.pathsList == null) preferences.pathsList = ""; //create preference "pathsList" in first time
 if (preferences.closeTabs == null) preferences.closeTabs = false; //create preference "closeTabs" in first time
+if (preferences.ifFileExists == null) preferences.ifFileExists = 0; //create preference "ifFileExists" in first time
 var pathsList = preferences.pathsList.split("|"); //array for downloads paths
 
 //toolbar button
@@ -59,7 +62,7 @@ function onPathsListChange(prefName)
   if ((pathsList.length > 1)||(pathsList[0] != ""))
   {
     for (var i = 0; i < pathsList.length; i ++)
-      namesList.push(OS.Path.basename(pathsList[i]));
+      namesList.push(PathIO.basename(pathsList[i]));
     panel.height += (pathsList.length * 25) + 8;
   }
   panel.port.emit("links-array", namesList); //send data to panel
@@ -79,7 +82,14 @@ function listTabs(path)
     }
   //download images  
   for (let imageUrl of imagesUrls)
-    downloadImage(imageUrl, path, addRandom(imageUrl.substr(imageUrl.lastIndexOf("/") + 1)));  
+  {
+    var fileName = imageUrl.substr(imageUrl.lastIndexOf("/") + 1);
+    //if preference "ifFileExists" equal "Rename" and saving file exists then add random string to name
+    if (!preferences.ifFileExists)
+      if (FileIO.exists(PathIO.join(path, fileName)))
+      	fileName = addRandom(fileName);
+    downloadImage(imageUrl, path, fileName);
+  }
 }
 
 //save file 
@@ -90,8 +100,7 @@ function downloadImage(sDownloadUrl, sPath, sFileName)
     try {
       let download = yield Downloads.createDownload({
       source: sDownloadUrl,
-      target: OS.Path.join(sPath,sFileName)});        
-      console.log('OS.Constants.Path.tmpDir='+OS.Constants.Path.tmpDir);
+      target: PathIO.join(sPath,sFileName)});        
       list.add(download);
       try {
         download.start();

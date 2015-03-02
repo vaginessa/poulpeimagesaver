@@ -131,4 +131,5 @@ panel.port.on("click-link", function(linkIndex) {
   if (linkIndex == "0")
     Downloads.getPreferredDownloadsDirectory().then(function(result) { listTabs(result); }); //download to default path
   else listTabs(pathsList[parseInt(linkIndex) - 1]);
+  panel.hide();
 });

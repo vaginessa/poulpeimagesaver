@@ -12,6 +12,8 @@ var self = require("sdk/self");
 
 var preferences = require("sdk/simple-prefs").prefs; //access to preferences
 if (preferences.pathsList == null) preferences.pathsList = ""; //create preference "pathsList" in first time
+if (preferences.imagesTypes == null)
+  preferences.imagesTypes = "jpg|jpe|jpeg|gif|png|webp|bmp|svg|tif|tiff|tga"; //create preference "imagesTypes" in first time
 if (preferences.closeTabs == null) preferences.closeTabs = false; //create preference "closeTabs" in first time
 if (preferences.ifFileExists == null) preferences.ifFileExists = 0; //create preference "ifFileExists" in first time
 var pathsList = preferences.pathsList.split("|"); //array for downloads paths
@@ -75,7 +77,7 @@ function listTabs(path)
   var imagesUrls = [];
   //get tabs urls
   for (let tab of tabs)
-    if (tab.url.match(new RegExp("https?://.*\.(jpg|jpe|jpeg|gif|png|webp|bmp|svg|tif|tiff|tga)")))
+    if (tab.url.match(new RegExp("https?://.*\.(" + preferences.imagesTypes + ")")))
     {
       imagesUrls.push(decodeURI(tab.url));
       if (preferences.closeTabs) tab.close();

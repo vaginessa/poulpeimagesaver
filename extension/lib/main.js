@@ -80,7 +80,11 @@ function listTabs(path)
     if (tab.url.match(new RegExp("https?://.*\.(" + preferences.imagesTypes + ")")))
     {
       imagesUrls.push(decodeURI(tab.url));
-      if (preferences.closeTabs) tab.close();
+      if (preferences.closeTabs)
+      {
+      	if (tabs.length > 1) tab.close();
+        else tab.url = "about:blank";
+      }
     }
   //download images  
   for (let imageUrl of imagesUrls)

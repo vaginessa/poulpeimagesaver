@@ -77,7 +77,7 @@ function listTabs(path)
   var imagesUrls = [];
   //get tabs urls
   for (let tab of tabs)
-    if (tab.url.match(new RegExp("https?://.*\.(" + preferences.imagesTypes + ")")))
+    if (tab.url.match(new RegExp("https?:\/\/.*\.(" + preferences.imagesTypes + ")")))
     {
       imagesUrls.push(decodeURI(tab.url));
       if (preferences.closeTabs)
